@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// ✅ Use environment variable ONLY (no localhost fallback in production)
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
+// Create axios instance
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -10,6 +12,9 @@ const apiClient = axios.create({
 });
 
 export const api = {
+  // =========================
+  // TDEE
+  // =========================
   calculateTDEE: async (data) => {
     try {
       const response = await apiClient.post('/calculate-tdee', data);
@@ -20,6 +25,9 @@ export const api = {
     }
   },
 
+  // =========================
+  // MEAL PLAN
+  // =========================
   generateMealPlan: async (data) => {
     try {
       const response = await apiClient.post('/generate-meal-plan', data);
@@ -30,19 +38,28 @@ export const api = {
     }
   },
 
+  // =========================
+  // SNAP COOK
+  // =========================
   snapCook: async (imageFile, remainingMacros) => {
     try {
       const formData = new FormData();
       formData.append('image', imageFile);
+
       if (remainingMacros) {
         formData.append('remaining_macros', JSON.stringify(remainingMacros));
       }
 
-      const response = await axios.post(`${API_BASE_URL}/snap-cook`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post(
+        `${API_BASE_URL}/snap-cook`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
       return response.data;
     } catch (error) {
       console.error('API Error (snapCook):', error.response?.data || error.message);
@@ -50,17 +67,23 @@ export const api = {
     }
   },
 
+  // =========================
+  // FOOD SEARCH
+  // =========================
   searchFood: async (query, healthConditions = []) => {
     try {
       const params = new URLSearchParams();
       params.append('q', query);
-      healthConditions.forEach(condition => params.append('health_conditions', condition));
-      
+
+      healthConditions.forEach((condition) =>
+        params.append('health_conditions', condition)
+      );
+
       const response = await apiClient.get(`/food-search?${params.toString()}`);
       return response.data;
     } catch (error) {
       console.error('API Error (searchFood):', error.response?.data || error.message);
       throw error;
     }
-  }
+  },
 };
