@@ -8,7 +8,7 @@ from meal_planner import generate_meal_plan
 from snap_cook import analyze_ingredients
 from food_data import search_foods
 
-app = Flask(**name**)
+app = Flask(__name__)
 
 # =========================
 
