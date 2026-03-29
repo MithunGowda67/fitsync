@@ -1,7 +1,11 @@
 import axios from 'axios';
 
-// ✅ Use environment variable ONLY (no localhost fallback in production)
+// ✅ Ensure API URL exists
 const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+if (!API_BASE_URL) {
+  console.error("❌ VITE_API_URL is NOT defined. Check your .env / Vercel settings.");
+}
 
 // Create axios instance
 const apiClient = axios.create({
@@ -9,6 +13,7 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 10000, // ⏱ prevent hanging requests
 });
 
 export const api = {
@@ -20,7 +25,7 @@ export const api = {
       const response = await apiClient.post('/calculate-tdee', data);
       return response.data;
     } catch (error) {
-      console.error('API Error (calculateTDEE):', error.response?.data || error.message);
+      console.error('❌ API Error (calculateTDEE):', error.response?.data || error.message);
       throw error;
     }
   },
@@ -33,7 +38,7 @@ export const api = {
       const response = await apiClient.post('/generate-meal-plan', data);
       return response.data;
     } catch (error) {
-      console.error('API Error (generateMealPlan):', error.response?.data || error.message);
+      console.error('❌ API Error (generateMealPlan):', error.response?.data || error.message);
       throw error;
     }
   },
@@ -62,7 +67,7 @@ export const api = {
 
       return response.data;
     } catch (error) {
-      console.error('API Error (snapCook):', error.response?.data || error.message);
+      console.error('❌ API Error (snapCook):', error.response?.data || error.message);
       throw error;
     }
   },
@@ -82,7 +87,7 @@ export const api = {
       const response = await apiClient.get(`/food-search?${params.toString()}`);
       return response.data;
     } catch (error) {
-      console.error('API Error (searchFood):', error.response?.data || error.message);
+      console.error('❌ API Error (searchFood):', error.response?.data || error.message);
       throw error;
     }
   },
