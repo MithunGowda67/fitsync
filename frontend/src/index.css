@@ -19,27 +19,9 @@
   --color-accent-primary: #6c5ce7;
   --color-accent-secondary: #a29bfe;
   --color-accent-glow: #7c6cf7;
-
-  --color-green-accent: #00e676;
-  --color-green-dim: #00c853;
-  --color-red-accent: #ff5252;
-  --color-orange-accent: #ffab40;
-  --color-blue-accent: #40c4ff;
-  --color-pink-accent: #ff4081;
-  --color-yellow-accent: #ffd740;
-
-  --color-protein: #ff6b6b;
-  --color-carbs: #ffd93d;
-  --color-fat: #6bcb77;
-  --color-water: #4fc3f7;
-
-  --color-gradient-start: #6c5ce7;
-  --color-gradient-mid: #a29bfe;
-  --color-gradient-end: #74b9ff;
 }
 
 /* ===== RESET ===== */
-
 * {
   margin: 0;
   padding: 0;
@@ -56,8 +38,6 @@ body {
   background: var(--color-dark-900);
   color: #e8e8f0;
   min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ===== SCROLLBAR ===== */
@@ -78,7 +58,7 @@ body {
   background: var(--color-dark-400);
 }
 
-/* ===== GLASS EFFECT ===== */
+/* ===== GLASS ===== */
 .glass {
   background: rgba(26, 26, 46, 0.6);
   backdrop-filter: blur(20px);
@@ -91,9 +71,9 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* ===== TEXT EFFECTS ===== */
+/* ===== TEXT ===== */
 .gradient-text {
-  background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-mid), var(--color-gradient-end));
+  background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -107,12 +87,16 @@ body {
   padding: 12px 32px;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
 }
 
 .btn-secondary {
@@ -124,7 +108,7 @@ body {
   cursor: pointer;
 }
 
-/* ===== INPUT ===== */
+/* ===== INPUT FIELD (🔥 FIXED) ===== */
 .input-field {
   background: var(--color-dark-700);
   border: 1px solid var(--color-dark-400);
@@ -132,10 +116,19 @@ body {
   padding: 14px 18px;
   color: white;
   width: 100%;
+  transition: all 0.2s ease;
 }
 
+/* 🔥 Hover */
+.input-field:hover {
+  border-color: var(--color-dark-300);
+}
+
+/* 🔥 Focus (MAIN FIX) */
 .input-field:focus {
+  outline: none;
   border-color: var(--color-accent-primary);
+  box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.4);
 }
 
 /* ===== CARD ===== */
@@ -146,7 +139,7 @@ body {
   padding: 24px;
 }
 
-/* ===== ANIMATIONS ===== */
+/* ===== ANIMATION ===== */
 @keyframes fadeInUp {
   from {
     opacity: 0;
